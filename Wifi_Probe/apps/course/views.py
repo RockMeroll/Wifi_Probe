@@ -16,6 +16,7 @@ def elect_course(req):
             if user_id and course_id and \
                     Courseselect.objects.filter(cid=course_id, sid=user_id).count() == 0:
                 Courseselect.objects.create(cid=course_id, sid=user_id)
+                return HttpResponse("Success")
         except ValueError as ve:
             return HttpResponse(str(ve))
 
