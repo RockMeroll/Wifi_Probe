@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-
+from apps.course.models import *
 
 # Create your views here.
 def new_course(req):
@@ -11,9 +11,12 @@ def elect_course(req):
     if req.method == 'POST':
         user_id = req.session.get('user_id')
         course_id = req.POST.get('course_id')
-        if user_id and course_id:
-            if
 
-
+        try:
+            if user_id and course_id and \
+                    Courseselect.objects.filter(cid=course_id, sid=user_id).count() == 0:
+                Courseselect.objects.create(cid=course_id, sid=user_id)
+        except ValueError as ve:
+            return HttpResponse(str(ve))
 
     return HttpResponse("OK")
